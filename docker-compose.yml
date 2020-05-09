@@ -1,0 +1,26 @@
+version: '3'                                                                   
+services:                                                                      
+  proxy:                                                                       
+    image: nginx:alpine                                                        
+    ports:                                                                     
+      - "80:80"                                                                
+    volumes:                                                                   
+      - ./proxy/nginx.conf:/etc/nginx/nginx.conf                               
+  web:                                                                         
+    image: nginx:alpine                                                        
+    expose:                                                                    
+      - "8080"                                                                 
+    volumes:                                                                   
+      - ./www:/www                                                             
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf                    
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+  notebook:
+    image: notebook:alpine
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./notebook:/opt/notebook
+      - ./jupyter_notebook_config.py:/root/.jupyter/jupyter_notebook_config.py
+
+
+
